@@ -64,6 +64,7 @@ public class SigilVariables : MonoBehaviour {
     void OnTriggerStay2D(Collider2D col){
         if(col.tag == "Player" && col.GetComponent<GameScript>().collecting){
             col.GetComponent<GameScript>().sigilsRemaining -= 1;
+            col.SendMessage("addToInventory",ID);
             Destroy(this.gameObject);
 
         }

@@ -8,9 +8,12 @@ public class TileMapGenerator : MonoBehaviour {
     public Transform wallObj;
     public Transform wallObj2;
     public Transform sigil1;
+    public Transform altarObj;
     public Transform gateObj;
+    public Transform exitObj;
     public Transform audioTrig;
     public Vector2 mapSize;
+
 
     [Range(0,1)]
     public float outlinePercent;
@@ -19,7 +22,9 @@ public class TileMapGenerator : MonoBehaviour {
     public float obstacleFill;
 
     List<Coord> allTileCoords;
+    List<int> solution;
     Queue<Coord> shuffledCoords;
+    List<Transform> altarList;
 
     public int seed = 10;
     public bool bordered = true;
@@ -41,6 +46,14 @@ public class TileMapGenerator : MonoBehaviour {
     public void GenerateMap(){
 
         allTileCoords = new List<Coord>();
+        solution = new List<int>();
+        for(int i = 0; i < sigilCount; i++){
+            solution.Add(i);
+        }
+        solution = new List<int>(Utility.ShuffleArray(solution.ToArray(), seed));
+        for(int i = 0; i < sigilCount; i++){
+            print("solution: " + solution[i]);
+        }
 
         for(int x = 0; x < mapSize.x; x++){
             for(int y = 0; y < mapSize.y; y++){
@@ -124,10 +137,10 @@ public class TileMapGenerator : MonoBehaviour {
 
             //Create the back room
             for(int x = -2; x < mapSize.x+2; x ++){
-                for(int y = (int)mapSize.y+2; y < mapSize.y + 12; y ++){
+                for(int y = (int)mapSize.y+2; y < (int)(mapSize.y + 12)+2; y ++){
                     Vector3 obstaclePosition = CoordToPosition(x, y);
                     //First Border
-                    if((x < 0 || x >= mapSize.x || y < (mapSize.y/2 +6) || y >= (mapSize.y/2 + 20)) && (x != mapExit.x)){
+                    if((x < 0 || x >= mapSize.x || y < (mapSize.y+2) || y >= (int)(mapSize.y+ 10 + 2)) && (x != mapExit.x)){
                         Transform newBorder = Instantiate(wallObj2, obstaclePosition + Vector3.forward * .5f, Quaternion.identity) as Transform;
                         newBorder.parent = mapHolder;
                     }
@@ -165,10 +178,27 @@ public class TileMapGenerator : MonoBehaviour {
         Transform gate = Instantiate(gateObj,  gatPos + Vector3.forward *.5f, Quaternion.identity) as Transform;
         gate.parent = mapHolder;
 
+
+        //Add the gate guarding the exit
+        Vector3 exPos = CoordToPosition(mapExit.x, (int)(mapExit.y +12+1));
+        Transform ex = Instantiate(exitObj,  exPos + Vector3.forward *.5f, Quaternion.identity) as Transform;
+        ex.parent = mapHolder;
+
         //Add the audio changer for entering the chamber
         Vector3 audPos = CoordToPosition(mapExit.x, mapExit.y + 2);
         Transform audTrig = Instantiate(audioTrig,  audPos + Vector3.forward *.5f, Quaternion.identity) as Transform;
         audTrig.parent = mapHolder;
+
+        //Add altars 
+        for(int a = 0; a < sigilCount; a++){
+            Vector3 altarPos = CoordToPosition(mapExit.x + (int)((3*a)-sigilCount), mapExit.y+5);
+            Transform alt = Instantiate(altarObj, altarPos + Vector3.forward *.5f, Quaternion.identity) as Transform;
+            alt.gameObject.GetComponent<AltarScript>().ID = solution[a];
+            alt.parent = mapHolder;
+
+        }
+
+
     }
 
 
