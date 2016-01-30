@@ -20,9 +20,9 @@ Sigil 5: Soul Pearl
 
 A mystic gem that is said to contain the spiritual essence of Tr'a. A strange relic that is feared by even his worshipers.
 
-Sigil 6: Regal Pearl
+Sigil 6: Flask
 
-A mystic gem that holds the demonic powers of Tr'a. A curious relic that is honored by the cultists of Tr'a.
+A vial filled with a viscous fluid, unknown in origin, but reeks of torpor and fate.
 
 Sigil 7: Guide Defiled
 
@@ -35,3 +35,7 @@ Envoking the true name of the wisest of the world can bring forth much pain. Hol
 Sigil 9: Aegis of Condor
 
 The retribution, sent from Skygods, carried this shield into the final battle with Tr'a that ended in his imprisonment. It is only fitting that it should reappear in this dark hour.
+
+Sigil 10: The Misalogus
+
+The holy writ of Skygods, divinely inspired to Mankind. Its pages seep with understanding for those who walk the path.
