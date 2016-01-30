@@ -32,4 +32,10 @@ public class GameScript : MonoBehaviour {
         }
 	}
       
+
+    void OnCollisionEnter2D(Collision2D col){
+        if(col.gameObject.tag == "Altar" && collecting)
+            print("JIMMY");
+    }
+
 }
