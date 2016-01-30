@@ -7,22 +7,32 @@ public class TileMapGenerator : MonoBehaviour {
     public Transform tileObj;
     public Transform wallObj;
     public Transform wallObj2;
+    public Transform sigil1;
+    public Transform gateObj;
+    public Transform audioTrig;
     public Vector2 mapSize;
 
     [Range(0,1)]
     public float outlinePercent;
 
+    [Range(0,1)]
+    public float obstacleFill;
+
     List<Coord> allTileCoords;
     Queue<Coord> shuffledCoords;
 
     public int seed = 10;
-    public int obstacleCount = 10;
     public bool bordered = true;
+    public bool displayTiles = false;
+    public int sigilCount = 3;
+
 
 
     Coord mapCenter;
+    Coord mapEntrance;
+    Coord mapExit;
     public bool blue = false;
-
+   
     void Start(){
         GenerateMap();
     }
@@ -39,6 +49,8 @@ public class TileMapGenerator : MonoBehaviour {
         }
         shuffledCoords = new Queue<Coord>(Utility.ShuffleArray(allTileCoords.ToArray(), seed));
         mapCenter = new Coord((int)mapSize.x/2,(int)mapSize.y/2);
+        mapEntrance = new Coord((int)mapSize.x/2,0);
+        mapExit = new Coord((int)mapSize.x/2,(int)mapSize.y-1);
 
         string holderName = "Generated Map";
         if(transform.FindChild(holderName)){
@@ -51,15 +63,20 @@ public class TileMapGenerator : MonoBehaviour {
         for(int x = 0; x < mapSize.x; x++){
             for(int y = 0; y < mapSize.y; y++){
                 Vector3 tilePosition = CoordToPosition(x,y);
+                if(displayTiles){
                 Transform newTile = Instantiate(tileObj, tilePosition, Quaternion.identity) as Transform;
                 newTile.localScale = Vector3.one *(1-outlinePercent);
                 newTile.parent = mapHolder;
+                }
             }
         }
 
-
+        int obstacleCount = (int)(mapSize.x * mapSize.y * obstacleFill);
         bool[,] obstacleMap = new bool[(int)mapSize.x,(int)mapSize.y];
+        bool[,] sigilMap = new bool[(int)mapSize.x,(int)mapSize.y];
+        bool[,] objectMap = new bool[(int)mapSize.x,(int)mapSize.y];
         int currentObstacleCount = 0;
+        int currentSigilCount = 0;
 
         for(int i = 0; i < obstacleCount; i++){
             Transform newObstacle;
@@ -67,46 +84,103 @@ public class TileMapGenerator : MonoBehaviour {
             Coord randomCoord = GetRandomCoord();
             obstacleMap[randomCoord.x, randomCoord.y] = true;
 
-            if(randomCoord != mapCenter && MapIsFullyAccessible(obstacleMap, currentObstacleCount)) {
-            Vector3 obstaclePosition = CoordToPosition(randomCoord.x, randomCoord.y);
-        //    int ran = Random.Range(1,3);
-        //    if(!blue)
-         //       ran = 1;
-         //   if(ran == 1)
-            newObstacle = Instantiate(wallObj, obstaclePosition + Vector3.forward * .5f, Quaternion.identity) as Transform;      
-          //  else
-          //  newObstacle = Instantiate(wallObj2, obstaclePosition + Vector3.forward * .5f, Quaternion.identity) as Transform;
-            newObstacle.parent = mapHolder;
+
+            if(randomCoord != mapEntrance && randomCoord != mapExit && MapIsFullyAccessible(obstacleMap, currentObstacleCount)) {
+                 Vector3 obstaclePosition = CoordToPosition(randomCoord.x, randomCoord.y);
+            
+
+                 newObstacle = Instantiate(wallObj, obstaclePosition + Vector3.forward * .5f, Quaternion.identity) as Transform;      
+
+                 newObstacle.parent = mapHolder;
+
+                objectMap[randomCoord.x, randomCoord.y]=true;
+               
             }
             else{
                 obstacleMap[randomCoord.x, randomCoord.y] = false;
                 currentObstacleCount --;
+               
             }    
 
         }
         //border
         //Create a border around the map
         if(bordered){
-            for(int x = -1; x < mapSize.x+1; x ++){
-              for(int y = -1; y < mapSize.y+1; y ++){
+            for(int x = -2; x < mapSize.x+2; x ++){
+              for(int y = -2; y < mapSize.y+2; y ++){
                   Vector3 obstaclePosition = CoordToPosition(x, y);
-
-                    if(x < 0 || x >= mapSize.x || y < 0 || y >= mapSize.y){
+                    //First Border
+                    if((x < 0 || x >= mapSize.x || y < 0 || y >= mapSize.y) && (x != mapExit.x)){
                        Transform newBorder = Instantiate(wallObj2, obstaclePosition + Vector3.forward * .5f, Quaternion.identity) as Transform;
                       newBorder.parent = mapHolder;
-                    }          
+                    }
+                    //Alcove
+                    if(((x > mapEntrance.x-1 && x < mapEntrance.x +1) && (y == mapEntrance.y-2))){
+                        Transform newBorder = Instantiate(wallObj2, obstaclePosition + Vector3.forward * .5f, Quaternion.identity) as Transform;
+                        newBorder.parent = mapHolder;
+                    }   
                }
             }
+
+            //Create the back room
+            for(int x = -2; x < mapSize.x+2; x ++){
+                for(int y = (int)mapSize.y+2; y < mapSize.y + 12; y ++){
+                    Vector3 obstaclePosition = CoordToPosition(x, y);
+                    //First Border
+                    if((x < 0 || x >= mapSize.x || y < (mapSize.y/2 +6) || y >= (mapSize.y/2 + 20)) && (x != mapExit.x)){
+                        Transform newBorder = Instantiate(wallObj2, obstaclePosition + Vector3.forward * .5f, Quaternion.identity) as Transform;
+                        newBorder.parent = mapHolder;
+                    }
+                }
+            }
+
+        }
+        //Add Objects
+ 
+        for(int i = 0; i < sigilCount; i++){
+            Transform newSigil;
+            currentSigilCount ++;
+            Coord randomCoord = GetRandomCoord();
+            sigilMap[randomCoord.x, randomCoord.y] = true;
+
+            print("Passing");
+          //  if(randomCoord != mapEntrance && randomCoord != mapExit) {
+                Vector3 obstaclePosition = CoordToPosition(randomCoord.x, randomCoord.y);
+
+                print("Placed");
+
+                
+                newSigil = Instantiate(sigil1, obstaclePosition + Vector3.forward * .5f, Quaternion.identity) as Transform;      
+                newSigil.GetComponent<SigilVariables>().ID = i; //Set Sigil ID for its image
+                newSigil.parent = mapHolder;
+
+                objectMap[randomCoord.x, randomCoord.y]=true;
+
+          //  }   
+
         }
 
+        //Add the gate guarding the chamber
+        Vector3 gatPos = CoordToPosition(mapExit.x, mapExit.y + 1);
+        Transform gate = Instantiate(gateObj,  gatPos + Vector3.forward *.5f, Quaternion.identity) as Transform;
+        gate.parent = mapHolder;
+
+        //Add the audio changer for entering the chamber
+        Vector3 audPos = CoordToPosition(mapExit.x, mapExit.y + 2);
+        Transform audTrig = Instantiate(audioTrig,  audPos + Vector3.forward *.5f, Quaternion.identity) as Transform;
+        audTrig.parent = mapHolder;
     }
 
 
     bool MapIsFullyAccessible(bool[,] obstacleMap, int currentObstacleCount){
         bool[,] mapFlags = new bool[obstacleMap.GetLength(0),obstacleMap.GetLength(1)];
         Queue<Coord> queue = new Queue<Coord> ();
-        queue.Enqueue (mapCenter);
-        mapFlags [mapCenter.x, mapCenter.y] = true;
+       // queue.Enqueue (mapCenter);
+       // mapFlags [mapCenter.x, mapCenter.y] = true;
+      //  int accessibleTileCount = 1;
+
+        queue.Enqueue (mapEntrance);
+        mapFlags [mapEntrance.x, mapEntrance.y] = true;
         int accessibleTileCount = 1;
 
         while (queue.Count > 0) {
