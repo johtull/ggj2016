@@ -1,0 +1,31 @@
+Each sigil listed is in the order of their make, but the numbers in parenthesis are the order in which they should be revealed in the list.
+
+Each level should have so many sigils needed, in a randomized correct order.
+
+
+This is an idea of how to progress them to increasing difficulty.
+Level 1: First 3 Sigils
+Level 2: Sigils 1-5
+Level 3: sigils 1-6
+Level 4: sigils 1-8
+Level 5: all 10
+
+Sigil 1: key (1)
+
+Sigil 2: Auger (3)
+
+Sigil 3: Blade (5)
+
+Sigil 4: Sanguine (2)
+
+Sigil 5: Soul (4)
+
+Sigil 6: Flask (7)
+
+Sigil 7: Mask (6)
+
+Sigil 8: Hurr (9)
+
+Sigil 9: Shield (10)
+
+Sigil 10: Misalogus (8)
