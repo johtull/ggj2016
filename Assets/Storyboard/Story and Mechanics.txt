@@ -1,0 +1,29 @@
+Misologue (Working Title)
+
+“Rumors tell of an ancient cult,
+Lost to the scriptures of time,
+Who worship a God,
+Unknown
+Yet known to all.
+
+In dreams they come,
+To defy the Truth.
+They awaken in dreams,
+to dethrone the light.
+
+Come, Oh devout One.
+Stem the tide,
+Waves outstretched before the realm of Reason,
+Drowning all who will not plunge
+Deep in Our name.”
+
+-The Scrolls of Tr'a
+
+
+  Game Story:  You play as a monk of a most holy order, who has been tasked with infiltrating a sect of demon worshipers who are trying to summon forth their dark master, Tr'a. You must go undetected through their dark temple, and perform the counter-ritual to seal away this evil forever. However, the powers of this Tr'a are strong in this place, and seek to corrupt you and your mission by leading you astray. You must fight to remember the rituals through the temple, and perform them all without flaw, lest you cause Tr'a to rise.
+
+Game Mechanics: 
+At the beginning of each level, you will see the order of items that must be collected and placed in the ritual chamber. However, the maze of each floor is dark and the longer you stay in the dark, the higher your corruption meter gets. If it maxes out, you succumb to evil and it is game over.
+	To remove corruption, you must stand within the light of a brazier, scattered throughout each floor. While in the light, look to the shadows, for they will point you in the direction of the ritual objects.
+	You must collect the pieces in the order they must be placed. Once all are collected, you can enter the ritual chamber of the floor and place them. They are placed in the order you picked them up, so hopefully you remember that and the original order given outside the floor. No matter how you place them, you will progress. However, you won't know if you succeeded or not until the end.
+
