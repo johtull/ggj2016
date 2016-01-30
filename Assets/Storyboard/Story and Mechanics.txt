@@ -31,7 +31,7 @@ Deep in Our name.”
 -The Scrolls of Tr'a
 
 
-  Game Story:  You play as a monk of a most holy order, who has been tasked with infiltrating a sect of demon worshipers who are trying to summon forth their dark master, Tr'a. You must go undetected through their dark temple, and perform the counter-ritual to seal away this evil forever. However, the powers of this Tr'a are strong in this place, and seek to corrupt you and your mission by leading you astray. You must fight to remember the rituals through the temple, and perform them all without flaw, lest you cause Tr'a to rise.
+  Game Story:  A secretive cult has taken residence in the ruins of an ancient temple, and have begun to awaken their dark god, Tr'a. The followers of Skygods have sensed the growing presence of darkness, and has envoked a Spirit of Light to send into the temple and perform the counter-ritual necessary to seal away Tr'a before he is risen. Within the temple, darkness holds sway and will slowly corrupt the Spirit of Light if it remains in the dark too long. Likewise, the will of Tr'a is at work to sabotage your rituals, so that he may remain. As the Spirit of Light, you must hold faith in your ability to remember and survive as you delve into the layers of the temple.
 
 Game Mechanics: 
 At the beginning of each level, you will see the order of items that must be collected and placed in the ritual chamber. However, the maze of each floor is dark and the longer you stay in the dark, the higher your corruption meter gets. If it maxes out, you succumb to evil and it is game over.
