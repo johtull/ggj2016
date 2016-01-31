@@ -87,6 +87,7 @@ public class TileMapGenerator : MonoBehaviour {
 
 
         GenerateMap();
+        player.GetComponent<GameScript>().getSigilCount(sigilCount);
     }
 
 

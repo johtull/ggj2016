@@ -51,9 +51,9 @@ public class GameScript : MonoBehaviour {
 
         //take damage in dark, heal in light
         if(dark)
-            health -= .35f;
+            health -= .30f;
         else
-            health += .80f;
+            health += .85f;
 
         //floor and cap
         if(health <= 0){
@@ -61,6 +61,7 @@ public class GameScript : MonoBehaviour {
             gameOver = true;
             Destroy(GameObject.Find("Record"));
             Destroy(this.gameObject.GetComponent<FourWayMovement>());
+            Application.LoadLevel("GameOverScreen");
         }
         if(health >= 1000)
             health = 1000;
@@ -101,7 +102,15 @@ public class GameScript : MonoBehaviour {
             //beat level 4, go to loading screen 5
             if(diff == 4)
                 destination = "LoadingScreen5";
-
+            //beat level 5, go to Ending
+            if(diff == 5)
+            {
+                if( GameObject.Find("Record").GetComponent<ProgressTracker>().score == 0)
+                    destination = "YouWinScreen";
+                else
+                     destination = "YouLoseScreen";
+                Destroy(GameObject.Find("Record"));
+            }
             GameObject.Find("Record").GetComponent<ProgressTracker>().level += 1;
             Application.LoadLevel(destination);
 
@@ -111,5 +120,10 @@ public class GameScript : MonoBehaviour {
     void addToInventory(int i){
         inventory.Enqueue(i);
 
+    }
+
+    public void getSigilCount(int i){
+    sigilsRemaining = i;
+        deposited = i;
     }
 }

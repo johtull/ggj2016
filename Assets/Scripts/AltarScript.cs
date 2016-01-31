@@ -45,6 +45,11 @@ public class AltarScript : MonoBehaviour {
         rend.material.mainTexture = ActiveGraphic;
            // Graphic.gameObject.renderer.material
             if(!tallied){
+                if(offering == ID)
+                    correct = 0;
+                else
+                    correct = 1;
+
                 GameObject.Find("Record").GetComponent<ProgressTracker>().score += correct;
 
                 Texture newTex = ActiveGraphic;
@@ -78,10 +83,7 @@ public class AltarScript : MonoBehaviour {
 
         }
 
-        if(offering == ID)
-            correct = 0;
-        else
-            correct = 1;
+
 
     }
 
