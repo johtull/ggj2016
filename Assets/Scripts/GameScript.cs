@@ -12,6 +12,11 @@ public class GameScript : MonoBehaviour {
     public int sigilsRemaining;
     public Queue<int> inventory;
     public int deposited;
+    public float health = 1000f;
+    public bool dark = true;
+    public GameObject light;
+
+
 	// Use this for initialization
 	void Start () {
         map = GameObject.Find("TileBasedMapGen");
@@ -25,7 +30,7 @@ public class GameScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if(Input.GetKey(KeyCode.E) ){
+        if(Input.GetKey(KeyCode.E) || Input.GetKey(KeyCode.Space) ){
             collecting = true;
         }
         else
@@ -41,6 +46,24 @@ public class GameScript : MonoBehaviour {
             Destroy(exit.gameObject);
             exitOpen = true;
         }
+
+        //take damage in dark, heal in light
+        if(dark)
+            health -= .35f;
+        else
+            health += .35f;
+
+        //floor and cap
+        if(health <= 0)
+            health = 0;
+        if(health >= 1000)
+            health = 1000;
+
+        //scale lighting with health
+        light.gameObject.GetComponent<Light>().intensity = (health/1000f) *4;
+
+        //debug health
+        print("Health:" + health);
 	}
       
 

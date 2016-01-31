@@ -12,6 +12,7 @@ public class TileMapGenerator : MonoBehaviour {
     public Transform gateObj;
     public Transform exitObj;
     public Transform audioTrig;
+    public Transform player;
     public Vector2 mapSize;
 
 
@@ -64,6 +65,7 @@ public class TileMapGenerator : MonoBehaviour {
         mapCenter = new Coord((int)mapSize.x/2,(int)mapSize.y/2);
         mapEntrance = new Coord((int)mapSize.x/2,0);
         mapExit = new Coord((int)mapSize.x/2,(int)mapSize.y-1);
+        player.transform.position = CoordToPosition(mapEntrance.x,mapEntrance.y-1);
 
         string holderName = "Generated Map";
         if(transform.FindChild(holderName)){
