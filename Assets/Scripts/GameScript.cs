@@ -53,7 +53,7 @@ public class GameScript : MonoBehaviour {
         if(dark)
             health -= .35f;
         else
-            health += .45f;
+            health += .80f;
 
         //floor and cap
         if(health <= 0){
@@ -92,6 +92,15 @@ public class GameScript : MonoBehaviour {
             //beat level 1, go to loading screen 2
             if(diff == 1)
                 destination = "LoadingScreen2";
+            //beat level 2, go to loading screen 3
+            if(diff == 2)
+                destination = "LoadingScreen3";
+            //beat level 3, go to loading screen 4
+            if(diff == 3)
+                destination = "LoadingScreen4";
+            //beat level 4, go to loading screen 5
+            if(diff == 4)
+                destination = "LoadingScreen5";
 
             GameObject.Find("Record").GetComponent<ProgressTracker>().level += 1;
             Application.LoadLevel(destination);

@@ -51,9 +51,9 @@ public class TileMapGenerator : MonoBehaviour {
         if(randomSeed)
             seed =  UnityEngine.Random.Range(1,10000);
        // seed = (int)Time.time;
-//        diff = GameObject.Find("Record").GetComponent<ProgressTracker>().level;
-      //  if(GameObject.Find("Record") == null)
-        //    diff = 1;
+      diff = GameObject.Find("Record").GetComponent<ProgressTracker>().level;
+       if(GameObject.Find("Record") == null)
+           diff = 1;
 
         bordered = true;
         displayTiles = false;

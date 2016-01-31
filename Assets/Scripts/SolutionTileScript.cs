@@ -21,7 +21,7 @@ public class SolutionTileScript : MonoBehaviour {
 	void Update () {
         duration -=1;
         if(duration<=0)
-            this.gameObject.SetActive(false);
+            Destroy(this.gameObject);
 	}
 
    public void setSolution(List<int> sol){

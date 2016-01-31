@@ -28,6 +28,7 @@ public class AltarScript : MonoBehaviour {
     void Update () {
         if(active){
         rend.material.mainTexture = ActiveGraphic;
+           // Graphic.gameObject.renderer.material
             if(!tallied){
                 GameObject.Find("Record").GetComponent<ProgressTracker>().score += correct;
                 tallied = true;
