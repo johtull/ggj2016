@@ -13,6 +13,8 @@ public class TileMapGenerator : MonoBehaviour {
     public Transform exitObj;
     public Transform audioTrig;
     public Transform player;
+    public Transform braObj;
+    public Transform endObj;
     public Vector2 mapSize;
 
 
@@ -31,6 +33,7 @@ public class TileMapGenerator : MonoBehaviour {
     public bool bordered = true;
     public bool displayTiles = false;
     public int sigilCount = 3;
+    public int brazierCount = 3;
 
 
 
@@ -186,6 +189,11 @@ public class TileMapGenerator : MonoBehaviour {
         Transform ex = Instantiate(exitObj,  exPos + Vector3.forward *.5f, Quaternion.identity) as Transform;
         ex.parent = mapHolder;
 
+        //Add the End
+        Vector3 endPos = CoordToPosition(mapExit.x, (int)(mapExit.y +12+2));
+        Transform endOb = Instantiate(endObj,  endPos + Vector3.forward *.5f, Quaternion.identity) as Transform;
+        endOb.parent = mapHolder;
+
         //Add the audio changer for entering the chamber
         Vector3 audPos = CoordToPosition(mapExit.x, mapExit.y + 2);
         Transform audTrig = Instantiate(audioTrig,  audPos + Vector3.forward *.5f, Quaternion.identity) as Transform;
@@ -200,6 +208,25 @@ public class TileMapGenerator : MonoBehaviour {
 
         }
 
+        //add braziers
+        brazierCount = (int)((mapSize.x * mapSize.y)/75);
+        for(int i = 0; i < brazierCount; i++){
+            Transform newBra;
+            currentSigilCount ++;
+            Coord randomCoord = GetRandomCoord();
+            sigilMap[randomCoord.x, randomCoord.y] = true;
+            Vector3 obstaclePosition = CoordToPosition(randomCoord.x, randomCoord.y);
+
+
+
+            newBra = Instantiate(braObj, obstaclePosition + Vector3.forward * .5f, Quaternion.identity) as Transform;      
+            newBra.parent = mapHolder;
+
+            objectMap[randomCoord.x, randomCoord.y]=true;
+
+            //  }   
+
+        }
 
     }
 

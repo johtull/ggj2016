@@ -15,6 +15,7 @@ public class GameScript : MonoBehaviour {
     public float health = 1000f;
     public bool dark = true;
     public GameObject light;
+    public bool gameOver = false;
 
 
 	// Use this for initialization
@@ -26,6 +27,7 @@ public class GameScript : MonoBehaviour {
         sigilsRemaining = map.GetComponent<TileMapGenerator>().sigilCount; 
         deposited = sigilsRemaining;
         inventory = new Queue<int>();
+        gameOver = false;
 	}
 	
 	// Update is called once per frame
@@ -51,11 +53,14 @@ public class GameScript : MonoBehaviour {
         if(dark)
             health -= .35f;
         else
-            health += .35f;
+            health += .45f;
 
         //floor and cap
-        if(health <= 0)
+        if(health <= 0){
             health = 0;
+            gameOver = true;
+            Destroy(this.gameObject.GetComponent<FourWayMovement>());
+        }
         if(health >= 1000)
             health = 1000;
 
@@ -72,9 +77,14 @@ public class GameScript : MonoBehaviour {
             if(!col.gameObject.GetComponent<AltarScript>().active){
                col.gameObject.GetComponent<AltarScript>().offering = inventory.Dequeue();
                 deposited -= 1;
+                health += 200;
                 col.gameObject.GetComponent<AltarScript>().active = true;
                
             }
+        }
+        if(col.gameObject.tag == "LevelEnder"){
+            Application.LoadLevel(0);
+
         }
     }
 
