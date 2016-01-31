@@ -69,7 +69,7 @@ public class GameScript : MonoBehaviour {
         light.gameObject.GetComponent<Light>().intensity = (health/1000f) *4;
 
         //debug health
-        print("Health:" + health);
+       // print("Health:" + health);
 	}
       
 

@@ -17,6 +17,7 @@ public class TileMapGenerator : MonoBehaviour {
     public Transform player;
     public Transform braObj;
     public Transform endObj;
+    public Transform solPanel;
     public Vector2 mapSize;
     public bool randomSeed;//Toggle seed being random
 
@@ -50,9 +51,9 @@ public class TileMapGenerator : MonoBehaviour {
         if(randomSeed)
             seed =  UnityEngine.Random.Range(1,10000);
        // seed = (int)Time.time;
-        diff = GameObject.Find("Record").GetComponent<ProgressTracker>().level;
-        if(GameObject.Find("Record") == null)
-            diff = 1;
+//        diff = GameObject.Find("Record").GetComponent<ProgressTracker>().level;
+      //  if(GameObject.Find("Record") == null)
+        //    diff = 1;
 
         bordered = true;
         displayTiles = false;
@@ -97,9 +98,11 @@ public class TileMapGenerator : MonoBehaviour {
             solution.Add(i);
         }
         solution = new List<int>(Utility.ShuffleArray(solution.ToArray(), seed));
-        for(int i = 0; i < sigilCount; i++){
+        solPanel.gameObject.GetComponent<SolutionTileScript>().setSolution(solution);
+       /* for(int i = 0; i < sigilCount; i++){
+            
             print("solution: " + solution[i]);
-        }
+        }*/
 
         for(int x = 0; x < mapSize.x; x++){
             for(int y = 0; y < mapSize.y; y++){
