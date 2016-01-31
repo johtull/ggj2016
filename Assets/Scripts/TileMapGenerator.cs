@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
+
 
 public class TileMapGenerator : MonoBehaviour {
 
@@ -16,6 +18,8 @@ public class TileMapGenerator : MonoBehaviour {
     public Transform braObj;
     public Transform endObj;
     public Vector2 mapSize;
+    public bool randomSeed;//Toggle seed being random
+
 
 
     [Range(0,1)]
@@ -34,15 +38,53 @@ public class TileMapGenerator : MonoBehaviour {
     public bool displayTiles = false;
     public int sigilCount = 3;
     public int brazierCount = 3;
-
+    public int diff = 0;
+   
 
 
     Coord mapCenter;
     Coord mapEntrance;
     Coord mapExit;
-    public bool blue = false;
    
     void Start(){
+        if(randomSeed)
+            seed =  UnityEngine.Random.Range(1,10000);
+       // seed = (int)Time.time;
+        diff = GameObject.Find("Record").GetComponent<ProgressTracker>().level;
+        if(GameObject.Find("Record") == null)
+            diff = 1;
+
+        bordered = true;
+        displayTiles = false;
+
+        //Level 1
+        if(diff == 1){
+        mapSize = new Vector2(11,11);
+        sigilCount = 3;
+        }
+        //Level 2
+        else if(diff == 2){
+            mapSize = new Vector2(21,21);
+            sigilCount = 5;
+        }
+        //Level 3
+        else if(diff == 3){
+            mapSize = new Vector2(31,31);
+            sigilCount = 6;
+        }
+        //Level 4
+        else if(diff == 4){
+            mapSize = new Vector2(41,41);
+            sigilCount = 8;
+        }
+        //Level 5
+       else if(diff == 5){
+            mapSize = new Vector2(51,51);
+            sigilCount = 10;
+        }
+
+
+
         GenerateMap();
     }
 

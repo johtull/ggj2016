@@ -8,6 +8,7 @@ public class AltarScript : MonoBehaviour {
     public int offering;
     public bool active;
     public int correct;
+    public bool tallied;
 
     //GRAPHICS
     public Transform Graphic;
@@ -20,17 +21,25 @@ public class AltarScript : MonoBehaviour {
     void Start () {
         active = false;
         correct = 0;
+        tallied = false;
     }
 
     // Update is called once per frame
     void Update () {
-        if(active)
+        if(active){
         rend.material.mainTexture = ActiveGraphic;
+            if(!tallied){
+                GameObject.Find("Record").GetComponent<ProgressTracker>().score += correct;
+                tallied = true;
+            }
+
+        }
 
         if(offering == ID)
             correct = 0;
         else
             correct = 1;
+
     }
 
 }

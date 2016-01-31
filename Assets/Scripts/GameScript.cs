@@ -59,6 +59,7 @@ public class GameScript : MonoBehaviour {
         if(health <= 0){
             health = 0;
             gameOver = true;
+            Destroy(GameObject.Find("Record"));
             Destroy(this.gameObject.GetComponent<FourWayMovement>());
         }
         if(health >= 1000)
@@ -83,7 +84,17 @@ public class GameScript : MonoBehaviour {
             }
         }
         if(col.gameObject.tag == "LevelEnder"){
-            Application.LoadLevel(0);
+            int diff = GameObject.Find("Record").GetComponent<ProgressTracker>().level;
+            string destination = "TitleScreen";
+            if(GameObject.Find("Record") == null)
+                diff = 1;
+
+            //beat level 1, go to loading screen 2
+            if(diff == 1)
+                destination = "LoadingScreen2";
+
+            GameObject.Find("Record").GetComponent<ProgressTracker>().level += 1;
+            Application.LoadLevel(destination);
 
         }
     }
