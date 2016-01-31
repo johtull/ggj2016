@@ -73,7 +73,7 @@ public class GameScript : MonoBehaviour {
 	}
       
 
-    void OnCollisionEnter2D(Collision2D col){
+    void OnCollisionStay2D(Collision2D col){
         if(col.gameObject.tag == "Altar" && collecting){
             if(!col.gameObject.GetComponent<AltarScript>().active){
                col.gameObject.GetComponent<AltarScript>().offering = inventory.Dequeue();
